@@ -7,14 +7,19 @@
 //
 
 import UIKit
+import ContactsUI
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBAction func goTapped(_ sender: UIButton) {
+        let picker = CNContactPickerViewController()
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
-
-
 }
 
+extension ViewController: CNContactPickerDelegate {
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+        contacts.forEach { print($0.givenName) }
+    }
+}
